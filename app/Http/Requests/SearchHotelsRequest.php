@@ -30,13 +30,19 @@ class SearchHotelsRequest extends FormRequest
             case searchTypeEnum::AGGREGATOR:
                 {
                     //validation for aggreagtion API to get from all points (static rules)
+                    $rules = [
+                        'from_date' => 'required|date',
+                        'to_date' => 'required|date',
+                        'city' => 'required|string',
+                        'adults_number' => 'required|integer',
+                    ];
                 }
                 break;
             case searchTypeEnum::SELECTED:
                 {
                     //validation for selected API to get from certain provider (get rules from config)
                     $rules['provider_code'] = 'required';
-                    if(isset($this->provider_code)){
+                    if (isset($this->provider_code)) {
                         //get rules for current selected provider
                         foreach (\Illuminate\Support\Facades\Config::get('providers')[$this->provider_code]['request_params'] as $param) {
                             $rules [$param['name']] = $param['validation'];

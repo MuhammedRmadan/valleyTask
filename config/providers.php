@@ -8,21 +8,25 @@ return [
                 'name' => 'fromDate',
                 'type' => 'ISO_LOCAL_DATE',
                 'validation' => 'required|date',
+                'test_value' => '11-9-2019',
             ],
             [
                 'name' => 'toDate',
                 'type' => 'ISO_LOCAL_DATE',
                 'validation' => 'required|date',
+                'test_value' => '11-9-2019',
             ],
             [
                 'name' => 'city',
                 'type' => 'IATA code (AUH)',
                 'validation' => 'required|string',
+                'test_value' => 'AUH',
             ],
             [
                 'name' => 'numberOfAdults',
                 'type' => 'integer',
                 'validation' => 'required|integer',
+                'test_value' => 4,
             ],
         ],
         'response_params' => [
@@ -55,21 +59,25 @@ return [
                 'name' => 'from',
                 'type' => 'ISO_INSTANT',
                 'validation' => 'required|date',
+                'test_value' => '11-9-2019',
             ],
             [
                 'name' => 'to',
                 'type' => 'ISO_INSTANT',
                 'validation' => 'required|date',
+                'test_value' => '11-9-2019',
             ],
             [
                 'name' => 'city',
                 'type' => 'IATA code (AUH)',
                 'validation' => 'required|string',
+                'test_value' => 'AUH',
             ],
             [
                 'name' => 'adultsCount',
                 'type' => 'integer',
                 'validation' => 'required|integer',
+                'test_value' => 4,
             ],
         ],
         'response_params' => [

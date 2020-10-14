@@ -33,7 +33,7 @@ class HotelService
      * return $response
      */
     public function searchCertainProvider(Request $request)
-    {
+    { logger($request->all());
         //get hotels array mapped and sorted by rate from certain provider
         $hotelsArray = json_decode(HotelHelper::json(\Illuminate\Support\Facades\Config::get('providers')[$request->provider_code]['provider_name']), true);
         return MapHotelsArray::mapHotelsArray($hotelsArray);
@@ -47,6 +47,7 @@ class HotelService
      */
     public function searchAllProviders(Request $request)
     {
+        logger($request->all());
         //get hotels array mapped and sorted by rate from all providers
         $hotelsArray = json_decode(HotelHelper::json('both'), true);
         $hotels = MapHotelsArray::mapHotelsArray($hotelsArray);
