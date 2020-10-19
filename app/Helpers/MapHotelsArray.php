@@ -24,7 +24,9 @@ class MapHotelsArray
                 //map different keys to one key to unify response
                 if (array_key_exists($key, \Illuminate\Support\Facades\Config::get('providersAttributes'))) {
                     //rename custom key to our unified key
-                    $hotel = self::change_array_key($hotel, $key, \Illuminate\Support\Facades\Config::get('providersAttributes')[$key]);
+                    $hotel = self::change_array_key($hotel, $key, \Illuminate\Support\Facades\Config::get('providersAttributes')[$key]['key_name']);
+                    logger('provider ' . \Illuminate\Support\Facades\Config::get('providersAttributes')[$key]['provider_name']);
+                    $hotel['providerName'] = \Illuminate\Support\Facades\Config::get('providersAttributes')[$key]['provider_name'];
                 }
             }
             ///push to sorted array

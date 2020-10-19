@@ -26,7 +26,7 @@ class HotelHelper
                     $json =
                         [
                             [
-                                'hotel' => 'bestHotels_1',
+                                'hotel' => 'ds',
                                 'hotelRate' => 3,
                                 'hotelFare' => 78,
                                 'roomAmenities' => 'room,kitchen',

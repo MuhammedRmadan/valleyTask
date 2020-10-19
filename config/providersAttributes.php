@@ -3,17 +3,17 @@
 
 return [
     //start of bestHotels provider keys
-    'hotel' => 'hotelName',
-    'hotelFare' => 'fare',
-    'roomAmenities' => 'amenities',
-    'hotelRate' => 'hotelRate',
-    //end of topHotels provider keys
-    //start of bestHotels provider keys
-    'hotelName' => 'hotelName',
-    'price' => 'fare',
-    'amenities' => 'amenities',
-    'rate' => 'hotelRate',
-    'discount' => 'discount',
+    'hotel' => ['key_name' => 'hotelName', 'provider_name' => 'bestHotels'],
+    'hotelFare' => ['key_name' => 'fare', 'provider_name' => 'bestHotels'],
+    'roomAmenities' => ['key_name' => 'amenities', 'provider_name' => 'bestHotels'],
+    'hotelRate' => ['key_name' => 'hotelRate', 'provider_name' => 'bestHotels'],
+    //end of bestHotels provider keys
+    //start of topHotels provider keys
+    'hotelName' => ['key_name' => 'hotelName', 'provider_name' => 'topHotels'],
+    'price' => ['key_name' => 'fare', 'provider_name' => 'topHotels'],
+    'amenities' => ['key_name' => 'amenities', 'provider_name' => 'topHotels'],
+    'rate' => ['key_name' => 'hotelRate', 'provider_name' => 'topHotels'],
+    'discount' => ['key_name' => 'discount', 'provider_name' => 'topHotels'],
     //end of topHotels provider keys
 ];
 

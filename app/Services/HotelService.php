@@ -33,7 +33,8 @@ class HotelService
      * return $response
      */
     public function searchCertainProvider(Request $request)
-    { logger($request->all());
+    {
+        logger($request->all());
         //get hotels array mapped and sorted by rate from certain provider
         $hotelsArray = json_decode(HotelHelper::json(\Illuminate\Support\Facades\Config::get('providers')[$request->provider_code]['provider_name']), true);
         return MapHotelsArray::mapHotelsArray($hotelsArray);
@@ -48,8 +49,14 @@ class HotelService
     public function searchAllProviders(Request $request)
     {
         logger($request->all());
-        //get hotels array mapped and sorted by rate from all providers
-        $hotelsArray = json_decode(HotelHelper::json('both'), true);
+        //get count of providers
+        $providersCount = count(\Illuminate\Support\Facades\Config::get('providersNames'));
+        //get hotels array mapped and sorted by rate from all providers (merge different responses from different providers)
+        $hotelsArray = [];
+        //loop through responses and merge with the same array
+        for ($index = 0; $index < $providersCount; $index++) {
+            $hotelsArray = array_merge($hotelsArray, json_decode(HotelHelper::json(\Illuminate\Support\Facades\Config::get('providers')[$index]['provider_name']), true));
+        }
         $hotels = MapHotelsArray::mapHotelsArray($hotelsArray);
 
         //handle check if new hotel added
