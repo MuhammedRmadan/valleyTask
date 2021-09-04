@@ -36,8 +36,16 @@ class HotelService
     {
         logger($request->all());
         //get hotels array mapped and sorted by rate from certain provider
-        $hotelsArray = json_decode(HotelHelper::json(\Illuminate\Support\Facades\Config::get('providers')[$request->provider_code]['provider_name']), true);
-        return MapHotelsArray::mapHotelsArray($hotelsArray);
+        switch ($request->provider_code) {
+            case 0:
+                $hotelsDataObject = new BestHotelsDataAdapter();
+                return $hotelsDataObject->getHotelsData();
+            case 1:
+                $hotelsDataObject = new TopHotelsDataAdapter();
+                return $hotelsDataObject->getHotelsData();
+            default:
+                throw new \RuntimeException("Unknown hotel provider");
+        }
     }
 
     /**
@@ -49,15 +57,10 @@ class HotelService
     public function searchAllProviders(Request $request)
     {
         logger($request->all());
-        //get count of providers
-        $providersCount = count(\Illuminate\Support\Facades\Config::get('providersNames'));
-        //get hotels array mapped and sorted by rate from all providers (merge different responses from different providers)
-        $hotelsArray = [];
-        //loop through responses and merge with the same array
-        for ($index = 0; $index < $providersCount; $index++) {
-            $hotelsArray = array_merge($hotelsArray, json_decode(HotelHelper::json(\Illuminate\Support\Facades\Config::get('providers')[$index]['provider_name']), true));
-        }
-        $hotels = MapHotelsArray::mapHotelsArray($hotelsArray);
+
+        //get data for all providers
+        $allHotelsDataAdapterObject = new AllHotelsDataAdapter();
+        $hotels = $allHotelsDataAdapterObject->getHotelsData();
 
         //handle check if new hotel added
         if (Cache::has('hotels')) {
