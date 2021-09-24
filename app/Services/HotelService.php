@@ -30,22 +30,13 @@ class HotelService
      * search.
      * search hotels from certain provider
      * @param HotelRepositoryInterface $hotel
+     * @param $requiredProviderAdapter : inject required provider object using Dependency Injection (applying open close principle)
      * return $response
      */
-    public function searchCertainProvider(Request $request)
+    public function searchCertainProvider(Request $request,$requiredProviderAdapter)
     {
         logger($request->all());
-        //get hotels array mapped and sorted by rate from certain provider
-        switch ($request->provider_code) {
-            case 0:
-                $hotelsDataObject = new BestHotelsDataAdapter();
-                return $hotelsDataObject->getHotelsData();
-            case 1:
-                $hotelsDataObject = new TopHotelsDataAdapter();
-                return $hotelsDataObject->getHotelsData();
-            default:
-                throw new \RuntimeException("Unknown hotel provider");
-        }
+        return $requiredProviderAdapter->getHotelsData();
     }
 
     /**

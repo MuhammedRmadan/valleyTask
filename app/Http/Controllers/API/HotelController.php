@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchHotelsRequest;
 use App\Models\Hotel;
 use App\Repositories\Interfaces\HotelRepositoryInterface;
+use App\Services\BestHotelsDataAdapter;
 use App\Services\HotelService;
+use App\Services\TopHotelsDataAdapter;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
@@ -35,7 +37,8 @@ class HotelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function searchHotels(SearchHotelsRequest $request, $type)
-    {  logger(__CLASS__ . __FUNCTION__ . __LINE__);
+    {
+        logger(__CLASS__ . __FUNCTION__ . __LINE__);
         //choose search type according to user select
         switch ($type) {
             case searchTypeEnum::AGGREGATOR:
@@ -44,8 +47,19 @@ class HotelController extends Controller
                 }
                 break;
             case searchTypeEnum::SELECTED:
-                {
-                    return $this->hotelService->searchCertainProvider($request);
+                {//get hotels array mapped and sorted by rate from certain provider
+                    $hotelsDataObject = '';
+                    switch ($request->provider_code) {
+                        case 0:
+                            $hotelsDataObject = new BestHotelsDataAdapter();
+                            break;
+                        case 1:
+                            $hotelsDataObject = new TopHotelsDataAdapter();
+                            break;
+                        default:
+                            throw new \RuntimeException("Unknown hotel provider");
+                    }
+                    return $this->hotelService->searchCertainProvider($request,$hotelsDataObject);
                 }
                 break;
             default:
